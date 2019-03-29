@@ -1,0 +1,237 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="HardcodedStrings"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:sd="clr-namespace:System.Data;assembly=System.Data"
+ xmlns:sx="clr-namespace:System.Xml;assembly=System.Xml"
+ xmlns:ui="http://schemas.uipath.com/workflow/activities"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="variablesList" Type="OutArgument(scg:List(x:String))" />
+    <x:Property Name="filePath" Type="InArgument(x:String)" />
+    <x:Property Name="defaultValuesTable" Type="OutArgument(sd:DataTable)" />
+    <x:Property Name="Report_Path" Type="InArgument(x:String)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>HardcodedStrings_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>UiPath.Orchestrator.Client</x:String>
+      <x:String>UiPath.Orchestrator.Client.Models</x:String>
+      <x:String>UiPath.Credentials.Activities</x:String>
+      <x:String>UiPath.Database.Activities</x:String>
+      <x:String>UiPath.Excel.Activities</x:String>
+      <x:String>UiPath.CSV.Activities</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>UiPath.CSV</x:String>
+      <x:String>UiPath.FTP.Activities</x:String>
+      <x:String>UiPath.Mail.Activities</x:String>
+      <x:String>UiPath.Mail.Exchange.Activities</x:String>
+      <x:String>UiPath.Mail.IMAP.Activities</x:String>
+      <x:String>UiPath.Mail.Outlook.Activities</x:String>
+      <x:String>UiPath.Mail.POP3.Activities</x:String>
+      <x:String>UiPath.Mail.SMTP.Activities</x:String>
+      <x:String>UiPath.PDF.Activities</x:String>
+      <x:String>UiPath.XPS.Activities</x:String>
+      <x:String>UiPath.Web</x:String>
+      <x:String>UiPath.Web.Activities</x:String>
+      <x:String>UiPath.JSON.Activities</x:String>
+      <x:String>UiPath.REST.Activities</x:String>
+      <x:String>UiPath.SOAP.Activities</x:String>
+      <x:String>UiPath.XML.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+      <x:String>System.Xml.XPath</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.Core</AssemblyReference>
+      <AssemblyReference>UiPath.Core.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.OrchestratorClient</AssemblyReference>
+      <AssemblyReference>UiPath.Credentials.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Database.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.FTP.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Mail.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.PDF.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Web</AssemblyReference>
+      <AssemblyReference>UiPath.Web.Activities</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>UiPath.IntelligentOCR</AssemblyReference>
+      <AssemblyReference>UiPath.Python</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>UiPath.Word</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+      <AssemblyReference>System.Collections.Immutable</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualStudio.Services.Common</AssemblyReference>
+      <AssemblyReference>UiPath.Cryptography</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="GetVariables" sap2010:WorkflowViewState.IdRef="Sequence_53">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="fileContents" />
+      <Variable x:TypeArguments="sx:XmlDocument" Default="[new XmlDocument()]" Name="diagramTree" />
+      <Variable x:TypeArguments="sx:XmlNodeList" Name="nodeList" />
+      <Variable x:TypeArguments="scg:List(x:String)" Default="[New List(Of String)]" Name="varList" />
+      <Variable x:TypeArguments="x:String" Name="text" />
+      <Variable x:TypeArguments="x:Boolean" Name="isHardCoded" />
+    </Sequence.Variables>
+    <ui:ReadTextFile Content="[fileContents]" DisplayName="Read XAML file" FileName="[filePath]" sap2010:WorkflowViewState.IdRef="ReadTextFile_7" />
+    <WriteLine DisplayName="Write line" sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="[filePath.Split(&quot;\&quot;c).Last]" />
+    <InvokeMethod DisplayName="Create XML tree" sap2010:WorkflowViewState.IdRef="InvokeMethod_11" MethodName="LoadXml">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sx:XmlDocument">[diagramTree]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">[fileContents]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod DisplayName="Get Variable Nodes" sap2010:WorkflowViewState.IdRef="InvokeMethod_12" MethodName="GetElementsByTagName">
+      <InvokeMethod.Result>
+        <OutArgument x:TypeArguments="sx:XmlNodeList">[nodeList]</OutArgument>
+      </InvokeMethod.Result>
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sx:XmlDocument">[diagramTree]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">Variable</InArgument>
+    </InvokeMethod>
+    <ui:BuildDataTable DataTable="[defaultValuesTable]" DisplayName="Build data table" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;Workflow_x0020_Name&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Name&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Value&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
+    <ui:ForEach x:TypeArguments="sx:XmlElement" DisplayName="For each" sap2010:WorkflowViewState.IdRef="ForEach`1_11" Values="[nodeList]">
+      <ui:ForEach.Body>
+        <ActivityAction x:TypeArguments="sx:XmlElement">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="sx:XmlElement" Name="item" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_52">
+            <If Condition="[item.OuterXml.Contains(&quot;x:String&quot;)]" sap2010:WorkflowViewState.IdRef="If_9">
+              <If.Then>
+                <If Condition="[item.OuterXml.Contains(&quot;Default=&quot;)]" DisplayName="If  - HardCoded" sap2010:WorkflowViewState.IdRef="If_8">
+                  <If.Then>
+                    <Sequence sap2010:WorkflowViewState.IdRef="Sequence_51">
+                      <Assign sap2010:WorkflowViewState.IdRef="Assign_73">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:String">[text]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:String">[item.OuterXml]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <Assign sap2010:WorkflowViewState.IdRef="Assign_74">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:String">[text]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:String">[text.Substring(text.IndexOf("Default=")+8,text.IndexOf("Name=")-(text.IndexOf("Default=")+8))]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{filePath.Split(&quot;\&quot;c).Last,item.Attributes(&quot;Name&quot;).Value,text}]" DataTable="[defaultValuesTable]" DisplayName="Add data row" sap2010:WorkflowViewState.IdRef="AddDataRow_3" />
+                    </Sequence>
+                  </If.Then>
+                </If>
+              </If.Then>
+            </If>
+          </Sequence>
+        </ActivityAction>
+      </ui:ForEach.Body>
+    </ui:ForEach>
+    <ui:AppendRange DataTable="[defaultValuesTable]" DisplayName="Append Range" SheetName="String" WorkbookPath="[Report_Path]" sap2010:WorkflowViewState.IdRef="AppendRange_1" />
+    <sads:DebugSymbol.Symbol>d1tEOlxVc2Vyc1w3MDMyMTY0NTFcRG93bmxvYWRzXEdFX0NvbmZpZGVudGlhbFxDUkJBemVlbSAxOCBPY3RcQ1JCQXplZW1cSGFyZGNvZGVkU3RyaW5ncy54YW1sJnQDtwEOAgEBdzp3TwIBA3k+eVUCAQJ9BX2VAQIBMn4FfoYBAgEwfwWEARQCASuFAQWNARQCASWOAQWOAfcKAgEijwEFtAESAgEKtQEFtQGzAQIBBH1VfWECATV9Hn0uAgEzflx+gwECATGDAS6DATwCAS6BATaBAUMCASyHATeHAUECASmKATaKAUMCASeMAS6MATYCASaOASKOATgCASOPAX6PAYoBAgEhlQELsQEWAgELtQEftQE1AgEItQFbtQFjAgEHtQFxtQGAAQIBBZYBDbABEgIBDJYBG5YBSwIBDZgBEa4BFgIBDpgBH5gBTwIBD5oBFawBIAIBEJsBF6IBIAIBHaMBF6oBIAIBFasBF6sBhgICARGgAUKgAVECASCdAUOdAUkCAR6oAUKoAaEBAgEYpQFDpQFJAgEWqwGjAasBuQECAROrAUKrAZgBAgES</sads:DebugSymbol.Symbol>
+  </Sequence>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="ReadTextFile_7" sap:VirtualizedContainerService.HintSize="314,59" />
+      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="314,61" />
+      <sap2010:ViewStateData Id="InvokeMethod_11" sap:VirtualizedContainerService.HintSize="314,132" />
+      <sap2010:ViewStateData Id="InvokeMethod_12" sap:VirtualizedContainerService.HintSize="314,132" />
+      <sap2010:ViewStateData Id="BuildDataTable_1" sap:VirtualizedContainerService.HintSize="314,59" />
+      <sap2010:ViewStateData Id="Assign_73" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="Assign_74" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="AddDataRow_3" sap:VirtualizedContainerService.HintSize="242,22" />
+      <sap2010:ViewStateData Id="Sequence_51" sap:VirtualizedContainerService.HintSize="264,346">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_8" sap:VirtualizedContainerService.HintSize="464,494">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_9" sap:VirtualizedContainerService.HintSize="589,642" />
+      <sap2010:ViewStateData Id="Sequence_52" sap:VirtualizedContainerService.HintSize="611,766">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEach`1_11" sap:VirtualizedContainerService.HintSize="314,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="AppendRange_1" sap:VirtualizedContainerService.HintSize="314,115" />
+      <sap2010:ViewStateData Id="Sequence_53" sap:VirtualizedContainerService.HintSize="336,973">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="HardcodedStrings_1" sap:VirtualizedContainerService.HintSize="376,1053" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>

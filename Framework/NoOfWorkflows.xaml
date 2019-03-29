@@ -1,0 +1,625 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="Main"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:sx="clr-namespace:System.Xml;assembly=System.Xml"
+ xmlns:ui="http://schemas.uipath.com/workflow/activities"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="UnUsedWorkFlows" Type="OutArgument(scg:List(x:String))" />
+    <x:Property Name="UsedWorkFlows" Type="OutArgument(scg:List(x:String))" />
+    <x:Property Name="FilesList" Type="OutArgument(s:String[])" />
+    <x:Property Name="ReUsableFlows" Type="OutArgument(scg:List(x:String))" />
+    <x:Property Name="singleFlows" Type="OutArgument(scg:List(x:String))" />
+    <x:Property Name="dicReusable" Type="OutArgument(scg:Dictionary(x:String, x:Int32))" />
+    <x:Property Name="folderPath" Type="InArgument(x:String)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>Main_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Xml.XPath</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.Core</AssemblyReference>
+      <AssemblyReference>UiPath.Core.Activities</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualStudio.Services.Common</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+      <AssemblyReference>System.Collections.Immutable</AssemblyReference>
+      <AssemblyReference>UiPath.IntelligentOCR</AssemblyReference>
+      <AssemblyReference>UiPath.Python</AssemblyReference>
+      <AssemblyReference>UiPath.Cryptography</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Java.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:WorkflowViewState.IdRef="Sequence_4">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="scg:List(x:String)" Default="[New List(Of String)]" Name="invokedFiles" />
+      <Variable x:TypeArguments="s:String[]" Name="xamlInDirectory" />
+      <Variable x:TypeArguments="x:Int32" Name="i" />
+      <Variable x:TypeArguments="x:String" Name="xamlFullPath" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="counter" />
+      <Variable x:TypeArguments="x:String" Name="invokeValue" />
+    </Sequence.Variables>
+    <Assign sap2010:WorkflowViewState.IdRef="Assign_4">
+      <Assign.To>
+        <OutArgument x:TypeArguments="s:String[]">[xamlInDirectory]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="s:String[]">[Directory.GetFiles(folderPath, "*.xaml", SearchOption.AllDirectories)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap2010:WorkflowViewState.IdRef="Assign_10">
+      <Assign.To>
+        <OutArgument x:TypeArguments="s:String[]">[FilesList]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="s:String[]">[xamlInDirectory]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap2010:WorkflowViewState.IdRef="Assign_29">
+      <Assign.To>
+        <OutArgument x:TypeArguments="scg:List(x:String)">[ReUsableFlows]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="scg:List(x:String)">[New List(Of String)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap2010:WorkflowViewState.IdRef="Assign_30">
+      <Assign.To>
+        <OutArgument x:TypeArguments="scg:List(x:String)">[singleFlows]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="scg:List(x:String)">[New List(Of String)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:ForEach x:TypeArguments="x:String" DisplayName="For each XAML file" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[xamlInDirectory]">
+      <ui:ForEach.Body>
+        <ActivityAction x:TypeArguments="x:String">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:String" Name="fileName" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_2">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="sx:XmlDocument" Default="[new XmlDocument()]" Name="diagramTree" />
+              <Variable x:TypeArguments="x:String" Name="fileContents" />
+              <Variable x:TypeArguments="sx:XmlNamespaceManager" Default="[New XmlNamespaceManager(diagramTree.NameTable)]" Name="namespaceManager" />
+              <Variable x:TypeArguments="sx:XmlNodeList" Name="newvar" />
+            </Sequence.Variables>
+            <ui:ReadTextFile Content="[fileContents]" DisplayName="Read XAML file" FileName="[fileName]" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
+            <InvokeMethod DisplayName="Create XML tree" sap2010:WorkflowViewState.IdRef="InvokeMethod_25" MethodName="LoadXml">
+              <InvokeMethod.TargetObject>
+                <InArgument x:TypeArguments="sx:XmlDocument">[diagramTree]</InArgument>
+              </InvokeMethod.TargetObject>
+              <InArgument x:TypeArguments="x:String">[fileContents]</InArgument>
+            </InvokeMethod>
+            <InvokeMethod DisplayName="Add UI namespace to manager" sap2010:WorkflowViewState.IdRef="InvokeMethod_2" MethodName="AddNamespace">
+              <InvokeMethod.TargetObject>
+                <InArgument x:TypeArguments="sx:XmlNamespaceManager">[namespaceManager]</InArgument>
+              </InvokeMethod.TargetObject>
+              <InArgument x:TypeArguments="x:String">ui</InArgument>
+              <InArgument x:TypeArguments="x:String">http://schemas.uipath.com/workflow/activities</InArgument>
+            </InvokeMethod>
+            <ui:ForEach x:TypeArguments="sx:XmlNode" DisplayName="For each invoke node" sap2010:WorkflowViewState.IdRef="ForEach`1_3" Values="[diagramTree.DocumentElement.SelectNodes(&quot;//ui:InvokeWorkflowFile&quot;, namespaceManager)]">
+              <ui:ForEach.Body>
+                <ActivityAction x:TypeArguments="sx:XmlNode">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="sx:XmlNode" Name="invokeNode" />
+                  </ActivityAction.Argument>
+                  <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                    <If Condition="[invokedFiles.Contains(invokeNode.Attributes(&quot;WorkflowFileName&quot;).Value)]" sap2010:WorkflowViewState.IdRef="If_7">
+                      <If.Then>
+                        <Sequence sap2010:WorkflowViewState.IdRef="Sequence_38">
+                          <If Condition="[invokeNode.Attributes(&quot;WorkflowFileName&quot;).Value.Contains(&quot;\&quot;)]" sap2010:WorkflowViewState.IdRef="If_11">
+                            <If.Then>
+                              <Sequence sap2010:WorkflowViewState.IdRef="Sequence_46">
+                                <Assign sap2010:WorkflowViewState.IdRef="Assign_33">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[invokeValue]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">[invokeNode.Attributes("WorkflowFileName").Value.Split("\"c)(1)]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </Sequence>
+                            </If.Then>
+                            <If.Else>
+                              <Assign sap2010:WorkflowViewState.IdRef="Assign_34">
+                                <Assign.To>
+                                  <OutArgument x:TypeArguments="x:String">[invokeValue]</OutArgument>
+                                </Assign.To>
+                                <Assign.Value>
+                                  <InArgument x:TypeArguments="x:String">[invokeNode.Attributes("WorkflowFileName").Value]</InArgument>
+                                </Assign.Value>
+                              </Assign>
+                            </If.Else>
+                          </If>
+                          <ui:CommentOut DisplayName="Comment out" sap2010:WorkflowViewState.IdRef="CommentOut_3">
+                            <ui:CommentOut.Body>
+                              <Sequence DisplayName="Ignored Activities" sap2010:WorkflowViewState.IdRef="Sequence_47">
+                                <InvokeMethod DisplayName="Invoke method" sap2010:WorkflowViewState.IdRef="InvokeMethod_32" MethodName="Add">
+                                  <InvokeMethod.TargetObject>
+                                    <InArgument x:TypeArguments="scg:List(x:String)">[ReUsableFlows]</InArgument>
+                                  </InvokeMethod.TargetObject>
+                                  <InArgument x:TypeArguments="x:String">[invokeNode.Attributes("WorkflowFileName").Value]</InArgument>
+                                </InvokeMethod>
+                              </Sequence>
+                            </ui:CommentOut.Body>
+                          </ui:CommentOut>
+                          <InvokeMethod DisplayName="Invoke method" sap2010:WorkflowViewState.IdRef="InvokeMethod_22" MethodName="Add">
+                            <InvokeMethod.TargetObject>
+                              <InArgument x:TypeArguments="scg:List(x:String)">[ReUsableFlows]</InArgument>
+                            </InvokeMethod.TargetObject>
+                            <InArgument x:TypeArguments="x:String">[invokeValue]</InArgument>
+                          </InvokeMethod>
+                          <ui:CommentOut DisplayName="Comment out" sap2010:WorkflowViewState.IdRef="CommentOut_4">
+                            <ui:CommentOut.Body>
+                              <Sequence DisplayName="Ignored Activities" sap2010:WorkflowViewState.IdRef="Sequence_48">
+                                <InvokeMethod DisplayName="Invoke method" sap2010:WorkflowViewState.IdRef="InvokeMethod_3" MethodName="Add">
+                                  <InvokeMethod.TargetObject>
+                                    <InArgument x:TypeArguments="scg:List(x:String)">[invokedFiles]</InArgument>
+                                  </InvokeMethod.TargetObject>
+                                  <InArgument x:TypeArguments="x:String">[invokeNode.Attributes("WorkflowFileName").Value]</InArgument>
+                                </InvokeMethod>
+                              </Sequence>
+                            </ui:CommentOut.Body>
+                          </ui:CommentOut>
+                          <InvokeMethod DisplayName="Invoke method" sap2010:WorkflowViewState.IdRef="InvokeMethod_33" MethodName="Add">
+                            <InvokeMethod.TargetObject>
+                              <InArgument x:TypeArguments="scg:List(x:String)">[invokedFiles]</InArgument>
+                            </InvokeMethod.TargetObject>
+                            <InArgument x:TypeArguments="x:String">[invokeValue]</InArgument>
+                          </InvokeMethod>
+                        </Sequence>
+                      </If.Then>
+                      <If.Else>
+                        <Sequence sap2010:WorkflowViewState.IdRef="Sequence_39">
+                          <If Condition="[invokeNode.Attributes(&quot;WorkflowFileName&quot;).Value.Contains(&quot;\&quot;)]" sap2010:WorkflowViewState.IdRef="If_10">
+                            <If.Then>
+                              <Sequence sap2010:WorkflowViewState.IdRef="Sequence_43">
+                                <Assign sap2010:WorkflowViewState.IdRef="Assign_32">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[invokeValue]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">[invokeNode.Attributes("WorkflowFileName").Value.Split("\"c)(1)]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </Sequence>
+                            </If.Then>
+                            <If.Else>
+                              <Assign sap2010:WorkflowViewState.IdRef="Assign_35">
+                                <Assign.To>
+                                  <OutArgument x:TypeArguments="x:String">[invokeValue]</OutArgument>
+                                </Assign.To>
+                                <Assign.Value>
+                                  <InArgument x:TypeArguments="x:String">[invokeNode.Attributes("WorkflowFileName").Value]</InArgument>
+                                </Assign.Value>
+                              </Assign>
+                            </If.Else>
+                          </If>
+                          <ui:CommentOut DisplayName="Comment out" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+                            <ui:CommentOut.Body>
+                              <Sequence DisplayName="Ignored Activities" sap2010:WorkflowViewState.IdRef="Sequence_44">
+                                <InvokeMethod DisplayName="Invoke method" sap2010:WorkflowViewState.IdRef="InvokeMethod_30" MethodName="Add">
+                                  <InvokeMethod.TargetObject>
+                                    <InArgument x:TypeArguments="scg:List(x:String)">[invokedFiles]</InArgument>
+                                  </InvokeMethod.TargetObject>
+                                  <InArgument x:TypeArguments="x:String">[invokeNode.Attributes("WorkflowFileName").Value]</InArgument>
+                                </InvokeMethod>
+                              </Sequence>
+                            </ui:CommentOut.Body>
+                          </ui:CommentOut>
+                          <InvokeMethod DisplayName="Invoke method" sap2010:WorkflowViewState.IdRef="InvokeMethod_23" MethodName="Add">
+                            <InvokeMethod.TargetObject>
+                              <InArgument x:TypeArguments="scg:List(x:String)">[invokedFiles]</InArgument>
+                            </InvokeMethod.TargetObject>
+                            <InArgument x:TypeArguments="x:String">[invokeValue]</InArgument>
+                          </InvokeMethod>
+                          <ui:CommentOut DisplayName="Comment out" sap2010:WorkflowViewState.IdRef="CommentOut_2">
+                            <ui:CommentOut.Body>
+                              <Sequence DisplayName="Ignored Activities" sap2010:WorkflowViewState.IdRef="Sequence_45">
+                                <InvokeMethod DisplayName="Invoke method" sap2010:WorkflowViewState.IdRef="InvokeMethod_31" MethodName="Add">
+                                  <InvokeMethod.TargetObject>
+                                    <InArgument x:TypeArguments="scg:List(x:String)">[singleFlows]</InArgument>
+                                  </InvokeMethod.TargetObject>
+                                  <InArgument x:TypeArguments="x:String">[invokeNode.Attributes("WorkflowFileName").Value]</InArgument>
+                                </InvokeMethod>
+                              </Sequence>
+                            </ui:CommentOut.Body>
+                          </ui:CommentOut>
+                          <InvokeMethod DisplayName="Invoke method" sap2010:WorkflowViewState.IdRef="InvokeMethod_24" MethodName="Add">
+                            <InvokeMethod.TargetObject>
+                              <InArgument x:TypeArguments="scg:List(x:String)">[singleFlows]</InArgument>
+                            </InvokeMethod.TargetObject>
+                            <InArgument x:TypeArguments="x:String">[invokeValue]</InArgument>
+                          </InvokeMethod>
+                        </Sequence>
+                      </If.Else>
+                    </If>
+                  </Sequence>
+                </ActivityAction>
+              </ui:ForEach.Body>
+            </ui:ForEach>
+          </Sequence>
+        </ActivityAction>
+      </ui:ForEach.Body>
+    </ui:ForEach>
+    <Sequence DisplayName="Initializing The lists" sap2010:WorkflowViewState.IdRef="Sequence_32">
+      <Assign DisplayName="New dictionary" sap2010:WorkflowViewState.IdRef="Assign_21">
+        <Assign.To>
+          <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:Int32)">[dicReusable]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Int32)">[new Dictionary(of String, Int32)]</InArgument>
+        </Assign.Value>
+      </Assign>
+    </Sequence>
+    <ui:ForEach x:TypeArguments="x:String" DisplayName="For each" sap2010:WorkflowViewState.IdRef="ForEach`1_12" Values="[invokedFiles]">
+      <ui:ForEach.Body>
+        <ActivityAction x:TypeArguments="x:String">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:String" Name="item" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_37">
+            <WriteLine DisplayName="Write line" sap2010:WorkflowViewState.IdRef="WriteLine_14" Text="[&quot;Invoked Files :&quot;+item.ToString]" />
+          </Sequence>
+        </ActivityAction>
+      </ui:ForEach.Body>
+    </ui:ForEach>
+    <Assign sap2010:WorkflowViewState.IdRef="Assign_7">
+      <Assign.To>
+        <OutArgument x:TypeArguments="scg:List(x:String)">[UsedWorkFlows]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="scg:List(x:String)">[New List(Of String)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap2010:WorkflowViewState.IdRef="Assign_8">
+      <Assign.To>
+        <OutArgument x:TypeArguments="scg:List(x:String)">[UnUsedWorkFlows]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="scg:List(x:String)">[New List(Of String)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:ForEach x:TypeArguments="x:String" DisplayName="For each - Used &amp; UnUsed Flow" sap2010:WorkflowViewState.IdRef="ForEach`1_4" Values="[xamlInDirectory]">
+      <ui:ForEach.Body>
+        <ActivityAction x:TypeArguments="x:String">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:String" Name="xaml" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_9">
+            <Assign sap2010:WorkflowViewState.IdRef="Assign_22">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[xamlFullPath]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[xaml]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign sap2010:WorkflowViewState.IdRef="Assign_6">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[xaml]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[xaml.Split("\"c).Last]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <If Condition="[invokedFiles.Contains(xaml.Trim)]" sap2010:WorkflowViewState.IdRef="If_8">
+              <If.Then>
+                <Sequence sap2010:WorkflowViewState.IdRef="Sequence_40">
+                  <InvokeMethod DisplayName="Invoke method" sap2010:WorkflowViewState.IdRef="InvokeMethod_26" MethodName="Add">
+                    <InvokeMethod.TargetObject>
+                      <InArgument x:TypeArguments="scg:List(x:String)">[UsedWorkFlows]</InArgument>
+                    </InvokeMethod.TargetObject>
+                    <InArgument x:TypeArguments="x:String">[xamlFullPath]</InArgument>
+                  </InvokeMethod>
+                  <WriteLine DisplayName="Write line" sap2010:WorkflowViewState.IdRef="WriteLine_9" Text="[&quot;Used Workflow : &quot;+xaml]" />
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence sap2010:WorkflowViewState.IdRef="Sequence_41">
+                  <InvokeMethod DisplayName="Invoke method" sap2010:WorkflowViewState.IdRef="InvokeMethod_27" MethodName="Add">
+                    <InvokeMethod.TargetObject>
+                      <InArgument x:TypeArguments="scg:List(x:String)">[UnUsedWorkFlows]</InArgument>
+                    </InvokeMethod.TargetObject>
+                    <InArgument x:TypeArguments="x:String">[xamlFullPath]</InArgument>
+                  </InvokeMethod>
+                  <WriteLine DisplayName="Write line" sap2010:WorkflowViewState.IdRef="WriteLine_10" Text="[&quot;Unused Workflow : &quot;+xaml]" />
+                </Sequence>
+              </If.Else>
+            </If>
+          </Sequence>
+        </ActivityAction>
+      </ui:ForEach.Body>
+    </ui:ForEach>
+    <sads:DebugSymbol.Symbol>d05EOlxVc2Vyc1w3MDMyMTY0NTFcRG9jdW1lbnRzXFVpUGF0aFxDb2RlUmV2aWV3Qm90XEZyYW1ld29ya1xOb09mV29ya2Zsb3dzLnhhbWxsVAODAw4CAQFWPlZVAgECXQVkDgMBkQFlBWwOAwGMAW0FdA4DAYgBdQV8DgMBhAF9BagCEgIBOqkCBbICEAIBNbMCBb4CEgIBLr8CBcYCDgIBKscCBc4CDgIBJs8CBYEDEgIBA2IyYnkDAZQBXzNfRAMBkgFqMmpDAwGPAWczZz4DAY0BcjpyTwMBiwFvO29KAwGJAXo6ek8DAYcBdzt3SAMBhQF9ggF9lQEDAYIBgwELpQIWAgE7qgIHsQIQAgE2swJ5swKJAQIBM7kCC7sCFgIBL8QCOsQCTwIBLcECO8ECSgIBK8wCOswCTwIBKckCO8kCTAIBJ88CkQHPAqQBAgEk1QIL/gIWAgEEhQFChQFXAgE9hwFKhwF8AgE8igENigGdAQIBfYsBDZABHAIBeJEBDZcBHAIBc5gBDaQCGgIBPq8CS68CbQIBOawCTKwCWQIBN7oCDboClQECATDWAg3dAhYCAR/eAg3lAhYCARvmAg39AhICAQWKAV2KAWkDAYABigEmigE2AgF+jwE2jwFEAgF7jQE+jQFLAgF5lgE2lgFjAgF3lQE2lQE4AgF2kwFGkwFYAgF0mAGOAZgB8AECAXKeAROhAh4CAT+6AmW6ApIBAgEx2wI42wI+AgEi2AI52AJHAgEg4wI44wJPAgEe4AI54AI/AgEc5gIb5gI/AgEG6AIR8AIcAgES8wIR+wIcAgEJnwEVoAIaAgFA6QIT7gIiAgEW7wIT7wKSAQIBE/QCE/kCIgIBDfoCE/oClQECAQqfASOfAXcCAUGhARneASQCAVrhARmeAiQCAULrAkjrAlcCARntAjztAkoCARfvAmrvAo8BAgEU9gJI9gJZAgEQ+AI8+AJKAgEO+gJr+gKSAQIBC6IBG7kBIAIBZ7oBG8UBKwIBZsYBG8sBKgIBYcwBG9cBKwIBYNgBG90BKgIBW+IBG/kBIAIBT/oBG4UCKwIBToYCG4sCKgIBSYwCG5cCKwIBSJgCG50CKgIBQ6IBKaIBfgIBaKQBH60BKgIBbbABH7cBKAIBacgBUMgBXwIBZMoBRMoBUQIBYtoBUNoBXgIBXtwBRNwBUQIBXOIBKeIBfgIBUOQBH+0BKgIBVfABH/cBKAIBUYgCUIgCXgIBTIoCRIoCUQIBSpoCUJoCXQIBRpwCRJwCUQIBRKUBIawBKgIBbrUBSrUBewIBbLIBS7IBWAIBauUBIewBKgIBVvUBSvUBewIBVPIBS/IBWAIBUqoBTKoBjAECAXGnAU2nAVoCAW/qAUzqAYwBAgFZ5wFN5wFaAgFX</sads:DebugSymbol.Symbol>
+  </Sequence>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="Assign_4" sap:VirtualizedContainerService.HintSize="1207,60" />
+      <sap2010:ViewStateData Id="Assign_10" sap:VirtualizedContainerService.HintSize="1207,60" />
+      <sap2010:ViewStateData Id="Assign_29" sap:VirtualizedContainerService.HintSize="1207,60" />
+      <sap2010:ViewStateData Id="Assign_30" sap:VirtualizedContainerService.HintSize="1207,60" />
+      <sap2010:ViewStateData Id="ReadTextFile_1" sap:VirtualizedContainerService.HintSize="1169,59" />
+      <sap2010:ViewStateData Id="InvokeMethod_25" sap:VirtualizedContainerService.HintSize="1169,132" />
+      <sap2010:ViewStateData Id="InvokeMethod_2" sap:VirtualizedContainerService.HintSize="1169,132" />
+      <sap2010:ViewStateData Id="Assign_33" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="Sequence_46" sap:VirtualizedContainerService.HintSize="264,184">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_34" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="If_11" sap:VirtualizedContainerService.HintSize="531,332">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="InvokeMethod_32" sap:VirtualizedContainerService.HintSize="218,133" />
+      <sap2010:ViewStateData Id="Sequence_47" sap:VirtualizedContainerService.HintSize="240,257">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="CommentOut_3" sap:VirtualizedContainerService.HintSize="531,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="InvokeMethod_22" sap:VirtualizedContainerService.HintSize="531,132" />
+      <sap2010:ViewStateData Id="InvokeMethod_3" sap:VirtualizedContainerService.HintSize="218,133" />
+      <sap2010:ViewStateData Id="Sequence_48" sap:VirtualizedContainerService.HintSize="240,257">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="CommentOut_4" sap:VirtualizedContainerService.HintSize="531,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="InvokeMethod_33" sap:VirtualizedContainerService.HintSize="531,132" />
+      <sap2010:ViewStateData Id="Sequence_38" sap:VirtualizedContainerService.HintSize="553,982">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_32" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="Sequence_43" sap:VirtualizedContainerService.HintSize="264,184">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_35" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="If_10" sap:VirtualizedContainerService.HintSize="531,332">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="InvokeMethod_30" sap:VirtualizedContainerService.HintSize="218,133" />
+      <sap2010:ViewStateData Id="Sequence_44" sap:VirtualizedContainerService.HintSize="240,257">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="CommentOut_1" sap:VirtualizedContainerService.HintSize="531,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="InvokeMethod_23" sap:VirtualizedContainerService.HintSize="531,132" />
+      <sap2010:ViewStateData Id="InvokeMethod_31" sap:VirtualizedContainerService.HintSize="218,133" />
+      <sap2010:ViewStateData Id="Sequence_45" sap:VirtualizedContainerService.HintSize="240,257">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="CommentOut_2" sap:VirtualizedContainerService.HintSize="531,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="InvokeMethod_24" sap:VirtualizedContainerService.HintSize="531,132" />
+      <sap2010:ViewStateData Id="Sequence_39" sap:VirtualizedContainerService.HintSize="553,982">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_7" sap:VirtualizedContainerService.HintSize="1131,1130" />
+      <sap2010:ViewStateData Id="Sequence_8" sap:VirtualizedContainerService.HintSize="1153,1254">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEach`1_3" sap:VirtualizedContainerService.HintSize="1169,1388">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="1191,1955">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="1207,2089">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_21" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="Sequence_32" sap:VirtualizedContainerService.HintSize="1207,184">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="WriteLine_14" sap:VirtualizedContainerService.HintSize="210,61" />
+      <sap2010:ViewStateData Id="Sequence_37" sap:VirtualizedContainerService.HintSize="232,185">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEach`1_12" sap:VirtualizedContainerService.HintSize="1207,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_7" sap:VirtualizedContainerService.HintSize="1207,60" />
+      <sap2010:ViewStateData Id="Assign_8" sap:VirtualizedContainerService.HintSize="1207,60" />
+      <sap2010:ViewStateData Id="Assign_22" sap:VirtualizedContainerService.HintSize="505,60" />
+      <sap2010:ViewStateData Id="Assign_6" sap:VirtualizedContainerService.HintSize="505,60" />
+      <sap2010:ViewStateData Id="InvokeMethod_26" sap:VirtualizedContainerService.HintSize="218,132" />
+      <sap2010:ViewStateData Id="WriteLine_9" sap:VirtualizedContainerService.HintSize="218,61" />
+      <sap2010:ViewStateData Id="Sequence_40" sap:VirtualizedContainerService.HintSize="240,357">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="InvokeMethod_27" sap:VirtualizedContainerService.HintSize="218,132" />
+      <sap2010:ViewStateData Id="WriteLine_10" sap:VirtualizedContainerService.HintSize="218,61" />
+      <sap2010:ViewStateData Id="Sequence_41" sap:VirtualizedContainerService.HintSize="240,357">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_8" sap:VirtualizedContainerService.HintSize="505,505">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_9" sap:VirtualizedContainerService.HintSize="527,829">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEach`1_4" sap:VirtualizedContainerService.HintSize="1207,963">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="1229,4131">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Main_1" sap:VirtualizedContainerService.HintSize="1269,4211" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>
